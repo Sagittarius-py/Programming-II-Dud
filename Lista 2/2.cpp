@@ -16,8 +16,6 @@ int main()
 
     for (int i = 0; i < ilosc; i++)
     {
-        //! For wywołuje sie odpowiednio ale nie pyta o cin więcej niż za 1 razem cokolwiek
-
         cout << "Podaj " << i + 1 << " przedmiot: ";
         cin >> _words[i];
 
