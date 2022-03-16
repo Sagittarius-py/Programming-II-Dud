@@ -3,9 +3,11 @@
 
 using namespace std;
 
+//! ma pomijać niewłaściwe oceny
+
 int main()
 {
-    int ilosc = 0;
+    int ilosc = 0, temp = 1;
     float srednia = 0;
 
     cout << "Ile chcesz wpisac przedmiotow do obliczenia sredniej: ";
@@ -20,7 +22,16 @@ int main()
         cin >> _words[i];
 
         cout << "Podaj ocene: ";
-        cin >> ocena[i];
+        cin >> temp;
+        if (temp < 1 || temp > 6)
+        {
+            cout << "Podana ocena jest nieprawidlowa, domyslnie podano 0";
+            i--;
+        }
+        else
+        {
+            ocena[i] = temp;
+        }
         cout << endl;
     }
     cout << endl

@@ -3,28 +3,65 @@
 
 using namespace std;
 
+//! piramida pusta czy pełna w środku
+
 int main()
 {
-    int ilosc = 0;
+    int ilosc = 0, czyPusta = 0;
 
     cout << "Podaj ilosc poziomow piramidy: ";
     cin >> ilosc;
 
-    int cokolwiek = ilosc;
+    cout << "Czy piramida ma byc pusta(podaj 0) czy pelna w srodku(podaj 1): ";
+    cin >> czyPusta;
 
-    for (int i = 0; i <= ilosc; i++)
+    int cokolwiek = 0;
+
+    if (czyPusta == 1)
     {
-        for (int l = cokolwiek; l > 0; l--)
+        for (int i = 0; i <= ilosc; i++)
         {
-            cout << " ";
+            for (int l = 0; l < cokolwiek; l++)
+            {
+                cout << " ";
+            }
+            for (int j = ilosc; j > i; j--)
+            {
+                cout << "*"
+                     << " ";
+            }
+            cokolwiek++;
+            cout << endl;
         }
-        for (int j = 0; j < i; j++)
+    }
+    else if (czyPusta == 0)
+    {
+        // pusto
+        for (int i = 0; i <= ilosc; i++)
         {
-            cout << "*"
-                 << " ";
+            for (int l = 0; l < cokolwiek; l++)
+            {
+                cout << " ";
+            }
+            for (int j = ilosc; j > i; j--)
+            {
+                if (j == ilosc || j == i + 1 || i == 0)
+                {
+                    cout << "*";
+                }
+                else
+                {
+                    cout << " ";
+                }
+                cout << " ";
+            }
+            cokolwiek++;
+            cout << endl;
         }
-        cokolwiek--;
-        cout << endl;
+    }
+    else
+    {
+        cout << "Podano nieprawidlowa wartosc pelna czy pusta";
     }
 
     return 0;

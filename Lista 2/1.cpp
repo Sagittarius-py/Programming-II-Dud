@@ -6,6 +6,8 @@ using namespace std;
 
 const float pi = 3.141592;
 
+// dodać stożek ścięty!
+
 float kula()
 {
     float r = 0;
@@ -60,6 +62,27 @@ float stozek()
     return 0;
 }
 
+float stozekSciety()
+{
+    float r = 0, h = 0, l = 0, R = 0;
+
+    cout << "Podaj srednice 1: ";
+    cin >> r;
+    cout << "Podaj srednice 2: ";
+    cin >> R;
+    cout << "Podaj wysokosc: ";
+    cin >> h;
+    cout << "Podaj dlugosc tworzacej: ";
+    cin >> l;
+
+    cout << endl
+         << "Objetosc stozka wynosi: " << pi / 3.0 * ((R * R) + (R * r) + (r * r)) * h << endl;
+    cout << endl
+         << "Pole stozka wynosi: " << pi * ((R * R) + (r * r) + (R + r) * l) << endl;
+
+    return 0;
+}
+
 float walec()
 {
     float r = 0, h = 0;
@@ -86,12 +109,13 @@ int main()
              << "  1) Kula" << endl
              << "  2) Prostopadloscian" << endl
              << "  3) Stozek" << endl
-             << "  4) Walec" << endl;
+             << "  4) Walec" << endl
+             << "  5) Stozek sciety" << endl;
 
         cout << "-->";
         cin >> wybor;
 
-        if ((wybor > 4) || (wybor < 1))
+        if ((wybor > 5) || (wybor < 1))
         {
             cout << "Wybrano zla opcje, prosze wybrac ponownie." << endl
                  << endl;
@@ -121,6 +145,9 @@ int main()
 
     case 4:
         walec();
+        break;
+    case 5:
+        stozekSciety();
         break;
     }
 
