@@ -3,7 +3,6 @@
 
 using namespace std;
 
-//! piramida pusta czy pełna w środku
 
 int main()
 {
@@ -36,7 +35,6 @@ int main()
     }
     else if (czyPusta == 0)
     {
-        // pusto
         for (int i = 0; i <= ilosc; i++)
         {
             for (int l = 0; l < cokolwiek; l++)

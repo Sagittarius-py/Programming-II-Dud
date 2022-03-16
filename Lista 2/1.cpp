@@ -6,8 +6,6 @@ using namespace std;
 
 const float pi = 3.141592;
 
-// dodać stożek ścięty!
-
 float kula()
 {
     float r = 0;
