@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//! wyświwtl wszystkie wyliczenia odsetek
+
 float obliczanieLokaty(float lokata, float wartosc, int procet, int okres)
 {
     int czas = 0;
@@ -16,6 +18,7 @@ float obliczanieLokaty(float lokata, float wartosc, int procet, int okres)
         czasNaliczki--;
         czas = czas + okres;
         i++;
+        cout << temp << " zl" << endl;
     };
 
     wartosc = temp - lokata;

@@ -8,6 +8,8 @@ constexpr int wiersze = 10;
 constexpr int kolumny = 10;
 int tablica[wiersze][kolumny];
 
+//! Oblicz średnią macierzy, w zależności od decyzji z przekątnymi albo bez
+
 void wyswietl(int rozmiar, int wyswietlana[wiersze][kolumny])
 {
     for (int i = 0; i < rozmiar; i++)
@@ -47,7 +49,9 @@ znacznik:
          << "    2) Oblicz sume ponizej przekatnej" << endl
          << "    3) Oblicz sume podanego wiersza" << endl
          << "    4) Oblicz sume podanej kolumny" << endl
-         << "    5) Wyjscie" << endl;
+         << "    5) Oblicz srednia macierzy z przekatnymi" << endl
+         << "    6) Oblicz srednia macierzy bez przekatnych" << endl
+         << "    7) Wyjscie" << endl;
 
     cin >> wybor;
 
@@ -137,6 +141,48 @@ znacznik:
         break;
     }
     case 5:
+    {
+        float temp = 0.0;
+        for (int i = 0; i < rozmiar; i++)
+        {
+            for (int j = 0; j < rozmiar; j++)
+            {
+                temp = temp + tablica[i][j];
+            }
+        }
+        float srednia = temp / (rozmiar * rozmiar);
+        cout << "Srednia wynosi: " << srednia << endl
+             << endl;
+
+        wyswietl(rozmiar, tablica);
+        goto znacznik;
+        break;
+    }
+    case 6:
+    {
+        float temp = 0.0;
+        for (int i = 0; i < rozmiar; i++)
+        {
+            for (int j = 0; j < rozmiar; j++)
+            {
+                if (i == j || i == rozmiar - j)
+                {
+                }
+                else
+                {
+                    temp = temp + tablica[i][j];
+                }
+            }
+        }
+        float srednia = temp / ((rozmiar * rozmiar) - rozmiar * 2 - 1);
+        cout << "Srednia wynosi: " << srednia << endl
+             << endl;
+
+        wyswietl(rozmiar, tablica);
+        goto znacznik;
+        break;
+    }
+    case 7:
     {
         break;
     }
