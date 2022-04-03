@@ -22,6 +22,103 @@ void wyswietl(int rozmiar, int wyswietlana[wiersze][kolumny])
     }
 }
 
+int sumaPow(int rozmiar, int tablica[wiersze][kolumny])
+{
+    int suma;
+    for (int i = 0; i < rozmiar; i++)
+    {
+        for (int j = 0; j < rozmiar; j++)
+        {
+            if (j > i)
+            {
+                suma = suma + tablica[i][j];
+            }
+        }
+    }
+    wyswietl(rozmiar, tablica);
+    return suma;
+}
+
+int sumaPon(int rozmiar, int tablica[wiersze][kolumny])
+{
+    int suma;
+    for (int i = 0; i < rozmiar; i++)
+    {
+        for (int j = 0; j < rozmiar; j++)
+        {
+            if (j < i)
+            {
+
+                suma = suma + tablica[i][j];
+            }
+        }
+    }
+    wyswietl(rozmiar, tablica);
+    return suma;
+}
+
+int sumaWiersz(int rozmiar, int tablica[wiersze][kolumny])
+{
+    int tmp = 0, suma;
+    cout << "Podaj nr. wiersza ktorego sume chcesz obliczyc: ";
+    cin >> tmp;
+
+    for (int i = 0; i < rozmiar; i++)
+    {
+        for (int j = 0; j < rozmiar; j++)
+        {
+            if (i == tmp - 1)
+            {
+
+                suma = suma + tablica[i][j];
+            }
+        }
+    }
+    wyswietl(rozmiar, tablica);
+    return suma;
+}
+
+int sumaKolumna(int rozmiar, int tablica[wiersze][kolumny])
+{
+    int tmp = 0, suma;
+    cout << "Podaj nr. kolumny ktorej sume chcesz obliczyc: ";
+    cin >> tmp;
+
+    for (int i = 0; i < rozmiar; i++)
+    {
+        for (int j = 0; j < rozmiar; j++)
+        {
+            if (j == tmp - 1)
+            {
+
+                suma = suma + tablica[i][j];
+            }
+        }
+    }
+    wyswietl(rozmiar, tablica);
+    return suma;
+}
+
+float sredniaMac(int rozmiar, int tablica[wiersze][kolumny])
+{
+    int wybor;
+    float temp = 0.0;
+    cout << "Czy chcesz obliczyc srednia z przekatnymi czy bez: ";
+    cin >> wybor;
+
+    for (int i = 0; i < rozmiar; i++)
+    {
+        for (int j = 0; j < rozmiar; j++)
+        {
+            temp = temp + tablica[i][j];
+        }
+    }
+    float srednia = temp / (rozmiar * rozmiar);
+    wyswietl(rozmiar, tablica);
+
+    return srednia;
+}
+
 int main()
 {
     srand(time(NULL));
@@ -49,9 +146,8 @@ znacznik:
          << "    2) Oblicz sume ponizej przekatnej" << endl
          << "    3) Oblicz sume podanego wiersza" << endl
          << "    4) Oblicz sume podanej kolumny" << endl
-         << "    5) Oblicz srednia macierzy z przekatnymi" << endl
-         << "    6) Oblicz srednia macierzy bez przekatnych" << endl
-         << "    7) Wyjscie" << endl;
+         << "    5) Oblicz srednia macierzy" << endl
+         << "    6) Wyjscie" << endl;
 
     cin >> wybor;
 
@@ -59,36 +155,16 @@ znacznik:
     {
     case 1:
     {
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                if (j > i)
-                {
-                    suma = suma + tablica[i][j];
-                }
-            }
-        }
-        wyswietl(rozmiar, tablica);
-        cout << endl
-             << "Suma wynosi:" << suma;
+        int suma = sumaPow(rozmiar, tablica);
+        cout
+            << endl
+            << "Suma wynosi:" << suma;
         goto znacznik;
         break;
     }
     case 2:
     {
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                if (j < i)
-                {
-
-                    suma = suma + tablica[i][j];
-                }
-            }
-        }
-        wyswietl(rozmiar, tablica);
+        int suma = sumaPon(rozmiar, tablica);
         cout << endl
              << "Suma wynosi:" << suma;
         goto znacznik;
@@ -96,22 +172,7 @@ znacznik:
     }
     case 3:
     {
-        int tmp = 0;
-        cout << "Podaj nr. wiersza ktorego sume chcesz obliczyc: ";
-        cin >> tmp;
-
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                if (i == tmp - 1)
-                {
-
-                    suma = suma + tablica[i][j];
-                }
-            }
-        }
-        wyswietl(rozmiar, tablica);
+        int suma = sumaWiersz(rozmiar, tablica);
         cout << endl
              << "Suma wynosi:" << suma;
         goto znacznik;
@@ -119,22 +180,8 @@ znacznik:
     }
     case 4:
     {
-        int tmp = 0;
-        cout << "Podaj nr. kolumny ktorej sume chcesz obliczyc: ";
-        cin >> tmp;
+        int suma = sumaKolumna(rozmiar, tablica);
 
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                if (j == tmp - 1)
-                {
-
-                    suma = suma + tablica[i][j];
-                }
-            }
-        }
-        wyswietl(rozmiar, tablica);
         cout << endl
              << "Suma wynosi:" << suma;
         goto znacznik;
@@ -142,47 +189,14 @@ znacznik:
     }
     case 5:
     {
-        float temp = 0.0;
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                temp = temp + tablica[i][j];
-            }
-        }
-        float srednia = temp / (rozmiar * rozmiar);
+        float srednia = sredniaMac(rozmiar, tablica);
         cout << "Srednia wynosi: " << srednia << endl
              << endl;
 
-        wyswietl(rozmiar, tablica);
         goto znacznik;
         break;
     }
     case 6:
-    {
-        float temp = 0.0;
-        for (int i = 0; i < rozmiar; i++)
-        {
-            for (int j = 0; j < rozmiar; j++)
-            {
-                if (i == j || i == rozmiar - j)
-                {
-                }
-                else
-                {
-                    temp = temp + tablica[i][j];
-                }
-            }
-        }
-        float srednia = temp / ((rozmiar * rozmiar) - rozmiar * 2 - 1);
-        cout << "Srednia wynosi: " << srednia << endl
-             << endl;
-
-        wyswietl(rozmiar, tablica);
-        goto znacznik;
-        break;
-    }
-    case 7:
     {
         break;
     }

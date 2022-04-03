@@ -16,10 +16,10 @@ int main()
     cout << "Podaj 15 liczb." << endl;
     for (int i = 0; i < 15; i++)
     {
-        // liczby[i] = rand() % 1000 + 1;
+        liczby[i] = rand() % 1000 + 1;
 
-        cout << "Liczba " << i + 1 << ": ";
-        cin >> liczby[i];
+        // cout << "Liczba " << i + 1 << ": ";
+        // cin >> liczby[i];
     }
 
     cout << "Podaj wartosc ktorej pozycje chcesz otwierdzic: ";
