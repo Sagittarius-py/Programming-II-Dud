@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <tuple>
 
-#include "1headers.hpp"
+#include "1lib.h"
+
+using namespace std;
 
 vector<int> wczytajWektor()
 {
@@ -22,7 +25,7 @@ vector<int> wczytajWektor()
     return wektor;
 }
 
-int znajdz(vector<int> wektor)
+tuple<int, int, int, int> znajdz(vector<int> wektor)
 {
     int max = wektor.at(0), min = wektor.at(0), max_pozycja = 0, min_pozycja = 0;
     for (int i = 0; i < wektor.size(); i++)
@@ -40,25 +43,37 @@ int znajdz(vector<int> wektor)
         }
     }
 
-    cout << max << " : " << max_pozycja << endl
-         << min << " : " << min_pozycja << endl;
-
-    // int lista[4] = {max, max_pozycja, min, min_pozycja};
-
-    // return lista;
-    return 0;
+    return make_tuple(max, max_pozycja, min, min_pozycja);
 }
 
-int main()
+float srednia(vector<int> wektor)
 {
-    vector<int> wektor = wczytajWektor();
-    znajdz(wektor);
-    // int wynik[4] = znajdz(wektor);
+    float srednia = 0.0;
 
     for (int i = 0; i < wektor.size(); i++)
     {
-        cout << wektor.at(i) << endl;
+        srednia = srednia + wektor.at(i);
     }
 
-    return 0;
+    srednia = srednia / wektor.size();
+    cout << srednia << endl;
+    return srednia;
+}
+
+tuple<int, int> szukajWartosci(vector<int> wektor)
+{
+    int szukana, szukana_poz;
+
+    cout << "Jaka liczbe chcesz znalezc: ";
+    cin >> szukana;
+
+    for (int i = 0; i < wektor.size(); i++)
+    {
+        if (wektor.at(i) == szukana)
+        {
+            szukana_poz = i + 1;
+        }
+    }
+
+    return make_tuple(szukana, szukana_poz);
 }
