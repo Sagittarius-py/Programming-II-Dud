@@ -4,8 +4,6 @@
 
 using namespace std;
 
-//! wyświwtl wszystkie wyliczenia odsetek
-
 float obliczanieLokaty(float lokata, float wartosc, int procet, int okres)
 {
     int czas = 0;

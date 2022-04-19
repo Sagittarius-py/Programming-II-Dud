@@ -6,7 +6,9 @@
 
 using namespace std;
 
-vector<vector<int>> generujMacierz(int wys, int szer)
+typedef vector<vector<int>> Macierz;
+
+Macierz generujMacierz(int wys, int szer)
 {
     vector<vector<int>> wektor;
 
@@ -28,9 +30,9 @@ vector<vector<int>> generujMacierz(int wys, int szer)
     return wektor;
 }
 
-vector<vector<int>> operacja(const vector<vector<int>> &macierz1, const vector<vector<int>> &macierz2, int wybor)
+Macierz operacja(const Macierz &macierz1, const Macierz &macierz2, int wybor)
 {
-    vector<vector<int>> macierzWyjsciowa;
+    Macierz macierzWyjsciowa;
 
     for (int i = 0; i < macierz1.size(); i++)
     {
@@ -55,9 +57,9 @@ vector<vector<int>> operacja(const vector<vector<int>> &macierz1, const vector<v
     return macierzWyjsciowa;
 }
 
-vector<vector<int>> mnozenie(const vector<vector<int>> &macierz1, const vector<vector<int>> &macierz2)
+Macierz mnozenie(const Macierz &macierz1, const Macierz &macierz2)
 {
-    vector<vector<int>> macierzWyjsciowa;
+    Macierz macierzWyjsciowa;
 
     for (int i = 0; i < macierz1.size(); i++)
     {
@@ -78,7 +80,7 @@ vector<vector<int>> mnozenie(const vector<vector<int>> &macierz1, const vector<v
     return macierzWyjsciowa;
 }
 
-void wyswietlMacierz(const vector<vector<int>> &macierz)
+void wyswietlMacierz(const Macierz &macierz)
 {
     for (int i = 0; i < macierz.size(); i++)
     {
@@ -93,4 +95,36 @@ void wyswietlMacierz(const vector<vector<int>> &macierz)
     }
     cout << endl
          << endl;
+}
+
+Macierz dopelnienie(const Macierz &macierz1, const Macierz &macierz2)
+{
+    Macierz macierzWyjsciowa;
+    int dopelniana = 0, wybor = 1;
+    cout << "Podaj wartosc do dopelnienia: ";
+    cin >> dopelniana;
+    cout << "Czy chcesz przeprowadzic operacje na macierzy 1 czy 2?: ";
+    cin >> wybor;
+
+    for (int i = 0; i < macierz1.size(); i++)
+    {
+        vector<int> wiersz = {};;
+
+        for (int j = 0; j < macierz1[i].size(); j++)
+        {
+            if (wybor == 1)
+            {
+                int temp = dopelniana - macierz1[i][j];
+                wiersz.push_back(temp);
+            }
+            else
+            {
+                int temp = dopelniana - macierz2[i][j];
+                wiersz.push_back(temp);
+            }
+        }
+        macierzWyjsciowa.push_back(wiersz);
+    }
+
+    return macierzWyjsciowa;
 }

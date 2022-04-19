@@ -30,7 +30,8 @@ int main()
              << "   1) Dodac macierze." << endl
              << "   2) Odjac macierze." << endl
              << "   3) Przemnorzyc macierze przez siebie." << endl
-             << "   4) Wyjsc."
+             << "   4) Obliczyc dopelnienie macierzy 1." << endl
+             << "   5) Wyjsc."
              << endl;
         cin >> wybor;
         cout << endl;
@@ -45,7 +46,12 @@ int main()
             vector<vector<int>> wynik = mnozenie(macierz1, macierz2);
             wyswietlMacierz(wynik);
         }
+        if (wybor == 4)
+        {
+            vector<vector<int>> wynik = dopelnienie(macierz1, macierz2);
+            wyswietlMacierz(wynik);
+        }
 
-    } while (wybor > 0 && wybor < 4);
+    } while (wybor > 0 && wybor < 5);
     return 0;
 }
