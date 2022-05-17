@@ -12,15 +12,15 @@ class Player
     int jailtime;
     int jailbreaks;
 
-    Player()
+    Player(Player &player)
     {
         playerID = 1;
         playerMoney = 100000;
     }
 
-    void rollTheDice();
+    int rollTheDice();
 
-    void goTo();
+    void goTo(int amount);
 
     void bancrupt(Player &player);
 };
@@ -32,35 +32,33 @@ class Banker
     vector<int> unsoldProperties = {};
 };
 
-class RoadField
+class BuyableField
 {
+
 public:
     int fieldID;
-    int fieldPlace;
     int fieldCost;
+    int payment;
+
     int houseCost;
     int hotelCost;
-    int payment;
 
     int owner;
     int houses;
     int hotel;
 
-    RoadField(RoadField &source)
+    BuyableField(BuyableField &source)
     {
 
-        source.fieldPlace = source.fieldID;
         source.fieldCost = source.fieldID * 20;
-        source.houseCost = source.fieldID * 10;
-        source.hotelCost = source.fieldID * 50;
-        source.payment = (source.fieldID * 5) + (source.houseCost * source.houses) + (source.hotel * 100);
+        source.payment = (source.fieldID * 5);
 
         source.owner = 0;
         source.houses = 0;
         source.hotel = 0;
     }
 
-    void fieldBuy(RoadField &source, Player &player)
+    void fieldBuy(BuyableField &source, Player &player, Banker &bank)
     {
         // if (source.owner == 0)
         // {
@@ -73,7 +71,7 @@ public:
         // }
     }
 
-    void fieldSell(RoadField &source, Player &buyer)
+    void fieldSell(BuyableField &source, Player &buyer)
     {
         // if (source.owner == 0)
         // {
@@ -97,7 +95,7 @@ public:
         // }
     }
 
-    void payment(RoadField &source, Player &player)
+    void payment(BuyableField &source, Player &player, Player &activePlayer)
     {
         // if (player.playerMoney > source.payment)
         // {
@@ -108,8 +106,29 @@ public:
         //     // ask player does he want to sell something or bancrupt
         // }
     }
+};
 
-    void placeHouse(RoadField &source, Player &player)
+//! ROAD FIELD CARD
+
+class RoadField : public BuyableField
+{
+    int fieldID;
+
+    int payment;
+
+    RoadField(BuyableField &source)
+    {
+        fieldID;
+        source.fieldCost = source.fieldID * 20;
+        source.houseCost = source.fieldID * 10;
+        source.hotelCost = source.fieldID * 50;
+        source.payment = (source.fieldID * 5);
+
+        source.owner = 0;
+        source.houses = 0;
+    }
+
+    void placeHouse(BuyableField &source, Player &player, Banker &bank)
     {
         // if (source.houses >= 0 && source.houses < 5)
         // {
@@ -132,9 +151,10 @@ public:
         //         cout << "Sorry but You dont have enought money";
         //     }
         // }
+        // source.payment = (source.fieldID * 5) + (source.houseCost * source.houses) ;
     }
 
-    void placeHotel(RoadField &source, Player &player)
+    void placeHotel(BuyableField &source, Player &player, Banker &bank)
     {
         // if (source.houses == 4)
         // {
@@ -149,70 +169,62 @@ public:
         //     {
         //         cout << "Sorry but You dont have enought money";
         //     }
+        //
         // }
+        //  source.payment = (source.fieldID * 5) + (source.hotel * 100);
     }
 };
 
-class Station
+class Station : public BuyableField
 {
-    int fieldID;
-    int fieldPlace;
-    int fieldCost;
-    int payment;
-    int owner;
-
     Station(Station &source)
     {
+        fieldID;
         int fieldCost = 200;
-        int payment = 200;
+        int payment = 50;
         int owner = 0;
     };
-
-    void fieldBuy(Station &source, Player &player);
-    void fieldSell(Station &source, Player &player);
-    void payment(Station &source, Player &player);
 };
 
-class Jail
+class UtilityField : public BuyableField
 {
-    int fieldID;
-    int fieldPlace;
-};
-
-class GoToJail
-{
-    int fieldID;
-    int fieldPlace;
-
-    void jailed(Player &player);
-};
-
-class Parking
-{
-    int fieldID;
-    int fieldPlace;
-
-    void PayOutBank(Player &player, Banker &bank);
-};
-
-class UtilityField
-{
-    int fieldID;
-    int fieldPlace;
-    int fieldCost;
-    int payment;
-    int owner;
-
+public:
     UtilityField(UtilityField &source)
     {
         int fieldCost = 75;
         int owner = 0;
     };
-
-    void fieldBuy(UtilityField &source, Player &player);
-    void fieldSell(UtilityField &source, Player &player);
-    void payment(UtilityField &source, Player &player);
 };
+
+class NonBuyableField
+{
+public:
+    int fieldID;
+    NonBuyableField(NonBuyableField &source)
+    {
+        fieldID;
+    }
+};
+
+class Jail : public NonBuyableField
+{
+    Jail(Jail &source)
+    {
+        fieldID;
+    }
+};
+
+class GoToJail : public NonBuyableField
+{
+    void jailed(Player &player);
+};
+
+class Parking : public NonBuyableField
+{
+    void PayOutBank(Player &player, Banker &bank);
+};
+
+
 
 main()
 {
