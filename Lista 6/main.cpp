@@ -4,24 +4,28 @@
 
 using namespace std;
 
+// ! Player & Banker
+
 class Player
 {
-    int playerID;
+
     int playerMoney;
+    int jailbreaks;
+    int utilitieCards;
+
+public:
+    int playerID;
     int playerStandingField;
     int jailtime;
-    int jailbreaks;
 
     Player(Player &player)
     {
         playerID = 1;
         playerMoney = 100000;
     }
-
     int rollTheDice();
-
+    void getOutJail();
     void goTo(int amount);
-
     void bancrupt(Player &player);
 };
 
@@ -29,7 +33,10 @@ class Banker
 {
     int allFunds;
     int bankDeposit;
+
+public:
     vector<int> unsoldProperties = {};
+    void nextPlayer();
 };
 
 class BuyableField
@@ -43,20 +50,11 @@ public:
     int houseCost;
     int hotelCost;
 
-    int owner;
+    Player *owner;
     int houses;
     int hotel;
 
-    BuyableField(BuyableField &source)
-    {
-
-        source.fieldCost = source.fieldID * 20;
-        source.payment = (source.fieldID * 5);
-
-        source.owner = 0;
-        source.houses = 0;
-        source.hotel = 0;
-    }
+    BuyableField();
 
     void fieldBuy(BuyableField &source, Player &player, Banker &bank)
     {
@@ -112,10 +110,6 @@ public:
 
 class RoadField : public BuyableField
 {
-    int fieldID;
-
-    int payment;
-
     RoadField(BuyableField &source)
     {
         fieldID;
@@ -173,6 +167,9 @@ class RoadField : public BuyableField
         // }
         //  source.payment = (source.fieldID * 5) + (source.hotel * 100);
     }
+
+    void sellHouse(BuyableField &source, Player &player, Banker &bank);
+    void sellHotel(BuyableField &source, Player &player, Banker &bank);
 };
 
 class Station : public BuyableField
@@ -189,44 +186,84 @@ class Station : public BuyableField
 class UtilityField : public BuyableField
 {
 public:
-    UtilityField(UtilityField &source)
+    UtilityField(UtilityField &source, Player &owner)
     {
         int fieldCost = 75;
-        int owner = 0;
     };
+
+public:
+    void utilityFieldCost();
 };
+
+// ! Non Buyable Fields
 
 class NonBuyableField
 {
 public:
     int fieldID;
-    NonBuyableField(NonBuyableField &source)
-    {
-        fieldID;
-    }
+    NonBuyableField();
 };
 
 class Jail : public NonBuyableField
 {
     Jail(Jail &source)
     {
-        fieldID;
+        fieldID = 10;
     }
 };
 
 class GoToJail : public NonBuyableField
 {
+    GoToJail(GoToJail &source)
+    {
+        fieldID = 30;
+    }
     void jailed(Player &player);
 };
 
 class Parking : public NonBuyableField
 {
+    Parking(Parking &source)
+    {
+        fieldID = 20;
+    }
     void PayOutBank(Player &player, Banker &bank);
 };
 
+//! Cards
 
+class DrawGoodCard : public NonBuyableField
+{
+    DrawGoodCard(DrawGoodCard &source)
+    {
+        fieldID;
+    }
 
-main()
+    void Draw(Player &player);
+};
+
+class DrawCard : public NonBuyableField
+{
+    DrawCard(DrawCard &source)
+    {
+        fieldID;
+    }
+
+    void Draw(Player &player);
+};
+
+class SpecialCard
+{
+    int cardID;
+    string name;
+    string description;
+
+    void cardFunction();
+};
+
+// ! main
+
+int main()
 {
     return 0;
 }
