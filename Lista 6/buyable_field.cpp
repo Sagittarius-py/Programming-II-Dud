@@ -6,12 +6,11 @@
 
 using namespace std;
 
-class BuyableField
+class BuyableField : public Field
 {
 
 public:
     int owner;
-    int fieldID;
     int fieldCost;
     int payment;
 

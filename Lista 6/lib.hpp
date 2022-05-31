@@ -4,6 +4,14 @@
 
 using namespace std;
 
+class Field
+{
+
+public:
+    int fieldID;
+    Field();
+};
+
 class Banker
 {
     int allFunds;
