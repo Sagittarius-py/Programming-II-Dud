@@ -14,8 +14,19 @@ class Macierze
                 func(a, b, x, y);
     }
 
+    // przeciążyć operator negacji
+
 public:
     vector<vector<T>> m;
+
+    Macierze operator!()
+    {
+
+        for (size_t y = 0; y < 3; y++)
+            for (size_t x = 0; x < 3; x++)
+                m[y][x] = -m[y][x];
+        return (*this);
+    }
 
     Macierze operator+(Macierze a)
     {
@@ -70,7 +81,7 @@ public:
 
     Point3d operator-(Point3d a)
     {
-        return {-a.x, -a.y, -a.z};
+        return {a.x - x, a.y - y, a.z - z};
     }
 
     Point3d operator*(Point3d a)
@@ -81,6 +92,16 @@ public:
     Point3d operator/(Point3d a)
     {
         return {x / a.x, y / a.y, z / a.z};
+    }
+
+    Point3d operator!()
+    {
+        return {-x, -y, -z};
+    }
+
+    Point3d operator-()
+    {
+        return {-x, -y, -z};
     }
 
     friend ostream &operator<<(ostream &out, const Point3d &p)
@@ -97,6 +118,7 @@ int main()
     Macierze<Point3d> punkt[2];
 
     const int w = 3, h = 3;
+
     for (int n = 0; n < 2; n++)
     {
         macierz[n].m.resize(w);
@@ -124,6 +146,9 @@ int main()
          << macierz[0] * macierz[1] << endl;
     cout << "macierz1 / macierz2:\n"
          << macierz[0] / macierz[1] << endl;
+    cout << "!macierz1 & !macierz2:\n"
+         << !macierz[0] << endl
+         << !macierz[1] << endl;
 
     cout << "================================================" << endl
          << "Punkty: " << endl
@@ -140,4 +165,7 @@ int main()
          << punkt[0] * punkt[1] << endl;
     cout << "punkt1 / punkt2:\n"
          << punkt[0] / punkt[1] << endl;
+    cout << "!punkt[0] & !punkt[1]" << endl
+         << !punkt[0] << endl
+         << !punkt[1] << endl;
 }
