@@ -15,6 +15,8 @@ class Macierze
     }
 
 public:
+    vector<vector<T>> m;
+
     Macierze operator+(Macierze a)
     {
         loopunkt2d(*this, a, a.m.size(), a.m[0].size(), [](Macierze a, Macierze &b, int x, int y)
@@ -54,8 +56,6 @@ public:
         }
         return out;
     }
-
-    vector<vector<T>> m;
 };
 
 class Point3d
