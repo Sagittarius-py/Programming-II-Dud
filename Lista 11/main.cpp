@@ -36,6 +36,7 @@ public:
     {
         time_t now = time(0);
         char *data = ctime(&now);
+
         this->ocena = ocena;
         this->data = data;
         this->przedmiot = przedmiot;
@@ -81,25 +82,10 @@ public:
 
     map<int, Semestr *> semestry;
 
-    Student()
-    {
-        this->nrIndeksu = "none";
-        this->imie = "none";
-        this->nazwisko = "none";
-        this->semestr = 1;
-    };
-
-    void dodajStudenta(string nrIndeksu,
-                       string imie,
-                       string nazwisko,
-                       int semestr)
-    {
-
-        this->nrIndeksu = nrIndeksu;
-        this->imie = imie;
-        this->nazwisko = nazwisko;
-        this->semestr = semestr;
-    }
+    Student(string nrIndeksu = "none",
+            string imie = "none",
+            string nazwisko = "none",
+            int semestr = 1) : nrIndeksu(nrIndeksu), imie(imie), nazwisko(nazwisko), semestr(semestr) {}
 
     // Dodawanie oceny na poziomie studenta
 
@@ -111,6 +97,7 @@ public:
 
         Semestr *tempSemestr = new Semestr;
         tempSemestr->aktualizujSemestr(semestr, ocena, przedmiot, prowadzacyImie, prowadzacyNazwisko);
+        semestry[semestr] = tempSemestr;
     }
 };
 
@@ -131,12 +118,9 @@ void dodajNowegoStudenta(map<string, Student *> *studenci)
     cin >> nazwisko;
     semestr = 1;
 
-    Student *temp = new Student;
-
-    temp->dodajStudenta(nrIndeksu, imie, nazwisko, semestr);
+    Student *temp = new Student(nrIndeksu, imie, nazwisko, semestr);
 
     (*studenci)[nrIndeksu] = temp;
-    cout << "penis";
 };
 
 //* dodawanie nowej oceny - funkcja zewnętrzna do komunikacji z użytkownikiem
@@ -170,13 +154,28 @@ void wyswietlWszystkich(map<string, Student *> *studenci)
     for (it = (*studenci).begin(); it != (*studenci).end(); it++)
     {
         cout << endl
-             << it->second->nrIndeksu << endl
-             << it->second->imie << endl
-             << it->second->nazwisko << endl
-             << it->second->semestr << endl
+             << "Nr. indeksu: " << it->second->nrIndeksu << endl
+             << "Imie: " << it->second->imie << endl
+             << "Nazwisko: " << it->second->nazwisko << endl
+             << "Semestr: " << it->second->semestr << endl
              << "==========" << endl;
     }
 }
+// * zwiększenie semestru studenta
+
+void zmienSemestr(map<string, Student *> *studenci)
+{
+
+    string nrIndeksu;
+    int nowySemestr, tmp;
+
+    cout << "Podaj nr indeksu studenta:";
+    cin >> nrIndeksu;
+    cout << "Podaj nowy semestr:";
+    cin >> nowySemestr;
+
+    (*studenci)[nrIndeksu]->semestr = nowySemestr;
+};
 
 //* wyswietlanie studenta - funkcja zewnętrzna do komunikacji z użytkownikiem
 
@@ -199,7 +198,12 @@ void wyswietlStudeta(map<string, Student *> *studenci)
     if (semestr > 0)
     {
         map<string, Przedmiot *> listaOcen = (*studenci)[nrIndeksu]->semestry[semestr]->przedmioty;
-        
+
+        // for (const auto &a : (*studenci)[nrIndeksu]->semestry)
+        //     cout << a.second->przedmioty[it]->ocena << endl;
+
+        // semestr!!!!!
+
         map<string, Przedmiot *>::iterator it;
         for (it = (listaOcen).begin(); it != (listaOcen).end(); it++)
         {
@@ -226,7 +230,8 @@ int main()
              << "   1) Dodaj studenta" << endl
              << "   2) Wyswietl studenta wg. nr dziennika" << endl
              << "   3) Wyswietl wszystkich studentow" << endl
-             << "   4) Dodaj ocene dla studenta" << endl;
+             << "   4) Dodaj ocene dla studenta" << endl
+             << "   5) Smien semestr studenta" << endl;
         cin >> wybor;
 
         switch (wybor)
@@ -242,6 +247,9 @@ int main()
             break;
         case 4:
             dodajNowaOcene(&studenci);
+            break;
+        case 5:
+            zmienSemestr(&studenci);
             break;
         }
     } while (wybor < 10);
