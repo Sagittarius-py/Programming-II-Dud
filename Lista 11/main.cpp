@@ -95,9 +95,18 @@ public:
                     string prowadzacyNazwisko)
     {
 
-        Semestr *tempSemestr = new Semestr;
-        tempSemestr->aktualizujSemestr(semestr, ocena, przedmiot, prowadzacyImie, prowadzacyNazwisko);
-        semestry[semestr] = tempSemestr;
+        if (semestry[semestr] == NULL)
+        {
+            Semestr *tempSemestr = new Semestr;
+            tempSemestr->aktualizujSemestr(semestr, ocena, przedmiot, prowadzacyImie, prowadzacyNazwisko);
+            semestry[semestr] = tempSemestr;
+        }
+        else
+        {
+            Semestr *tempSemestr = semestry[semestr];
+            tempSemestr->aktualizujSemestr(semestr, ocena, przedmiot, prowadzacyImie, prowadzacyNazwisko);
+            semestry[semestr] = tempSemestr;
+        }
     }
 };
 
@@ -141,7 +150,6 @@ void dodajNowaOcene(map<string, Student *> *studenci)
     cout << "Podaj nazwisko prowadzacego: ";
     cin >> prowadzacyNazwisko;
 
-    Semestr *tempSemestr = new Semestr;
     (*studenci)[nrIndeksu]->dodajOcene(ocena, przedmiot, prowadzacyImie, prowadzacyNazwisko);
 };
 
@@ -199,11 +207,6 @@ void wyswietlStudeta(map<string, Student *> *studenci)
     {
         map<string, Przedmiot *> listaOcen = (*studenci)[nrIndeksu]->semestry[semestr]->przedmioty;
 
-        // for (const auto &a : (*studenci)[nrIndeksu]->semestry)
-        //     cout << a.second->przedmioty[it]->ocena << endl;
-
-        // semestr!!!!!
-
         map<string, Przedmiot *>::iterator it;
         for (it = (listaOcen).begin(); it != (listaOcen).end(); it++)
         {
@@ -214,6 +217,38 @@ void wyswietlStudeta(map<string, Student *> *studenci)
                  << it->second->prowadzacyImie << " " << it->second->prowadzacyNazwisko << endl
                  << "==========" << endl;
         }
+    }
+};
+
+void srednia(map<string, Student *> *studenci)
+{
+    int semestr, i;
+    float srednia;
+    string nrIndeksu;
+    cout << "Podaj nr indeksu studenta:";
+    cin >> nrIndeksu;
+
+    Student *tempStudent = (*studenci)[nrIndeksu];
+    cout << endl
+         << "Imie: " << tempStudent->imie << endl
+         << "Nazwisko: " << tempStudent->nazwisko << endl;
+
+    cout << "Podaj semest do obliczenia sredniej(przerwij jesli 0): ";
+    cin >> semestr;
+
+    if (semestr > 0)
+    {
+        map<string, Przedmiot *> listaOcen = tempStudent->semestry[semestr]->przedmioty;
+        map<string, Przedmiot *>::iterator it;
+
+        for (it = (listaOcen).begin(), i = 0; it != (listaOcen).end(); it++, i++)
+        {
+
+            srednia = srednia + (it->second->ocena);
+        }
+
+        srednia = srednia / i;
+        cout << "Srednia za " << semestr << " semestr wynosi: " << srednia << endl;
     }
 };
 
@@ -231,7 +266,8 @@ int main()
              << "   2) Wyswietl studenta wg. nr dziennika" << endl
              << "   3) Wyswietl wszystkich studentow" << endl
              << "   4) Dodaj ocene dla studenta" << endl
-             << "   5) Smien semestr studenta" << endl;
+             << "   5) Smien semestr studenta" << endl
+             << "   6) Oblicz srednia studenta" << endl;
         cin >> wybor;
 
         switch (wybor)
@@ -250,6 +286,9 @@ int main()
             break;
         case 5:
             zmienSemestr(&studenci);
+            break;
+        case 6:
+            srednia(&studenci);
             break;
         }
     } while (wybor < 10);
